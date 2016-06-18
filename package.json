@@ -4,7 +4,7 @@
   "description": "Generate opinionated react applications",
   "author": {
     "name": "Dmytro Kovalchuk",
-    "email": "dimasmith@gmail.com",
+    "email": "dimasmith@gmail.com"
   },
   "files": [
     "generators"
