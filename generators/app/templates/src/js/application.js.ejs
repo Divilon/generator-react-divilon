@@ -1,0 +1,29 @@
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+
+import configureStore from './configureStore';
+import { sayHello } from './actions/actions';
+import Hello from './components/hello/hello.component';
+
+const rootEl = document.getElementById('application');
+const store = configureStore({});
+
+const Application = React.createClass({
+  render() {
+    return (
+      <div className="application">
+        <h1><%= title %></h1>
+        <Hello/>
+      </div>
+    )
+  }
+});
+
+render(
+    <Provider store={store}>
+      <Application/>
+    </Provider>,
+  rootEl,
+  () => store.dispatch(sayHello('Hello, World!'))
+);
