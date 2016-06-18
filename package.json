@@ -1,12 +1,10 @@
 {
   "name": "generator-react-divilon",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generate opinionated react applications",
-  "homepage": "",
   "author": {
     "name": "Dmytro Kovalchuk",
     "email": "dimasmith@gmail.com",
-    "url": ""
   },
   "files": [
     "generators"
@@ -48,7 +46,7 @@
       "no-trailing-spaces": 0
     }
   },
-  "repository": "divilon/generator-react-divilon",
+  "repository": "Divilon/generator-react-divilon",
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
