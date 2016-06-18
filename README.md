@@ -31,6 +31,6 @@ Then generate your new project:
 yo react-divilon
 ```
 
-[travis-image]: https://travis-ci.org/divilon/generator-react-divilon.svg?branch=master
-[travis-url]: https://travis-ci.org/divilon/generator-react-divilon
+[travis-image]: https://travis-ci.org/Divilon/generator-react-divilon.svg?branch=master
+[travis-url]: https://travis-ci.org/Divilon/generator-react-divilon
 
