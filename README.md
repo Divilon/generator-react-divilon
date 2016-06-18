@@ -1,4 +1,4 @@
-# generator-react-divilon [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+# generator-react-divilon [![Build Status][travis-image]][travis-url]
 Generate opinionated react applications.
 
 It generates basic react application using 
