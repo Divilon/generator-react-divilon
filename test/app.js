@@ -8,6 +8,7 @@ describe('generator-react-divilon:app', function () {
     return helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({ 'skip-install': true })
       .withArguments(['divilon-react'])
+      .withPrompts({ layout: 'node' })
       .toPromise();
   });
 

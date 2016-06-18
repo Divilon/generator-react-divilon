@@ -4,6 +4,25 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var _ = require('lodash');
 
+/**
+ * Supported source layouts. Configures generator with
+ * directories for placing sources and built files.
+ */
+var layouts = {
+  node: {
+    sourceDir: 'src',
+    destDir: 'build'
+  },
+  gradle: {
+    sourceDir: 'src/main/webapp',
+    destDir: 'build/www'
+  },
+  maven: {
+    sourceDir: 'src/main/webapp',
+    destDir: 'target/www'
+  }
+};
+
 module.exports = yeoman.Base.extend({
 
   constructor: function () {
@@ -23,20 +42,24 @@ module.exports = yeoman.Base.extend({
       'Welcome to the good ' + chalk.red('generator-react-divilon') + ' generator!'
     ));
 
-    var prompts = [];
+    var prompts = [{
+      type: 'list',
+      name: 'layout',
+      message: 'Which type of source layout you prefer?',
+      choices: Object.keys(layouts),
+      default: 'node',
+      store: true
+    }];
 
     return this.prompt(prompts).then(function (props) {
       // To access props later use this.props.someAnswer;
       this.props = props;
+      this.config.set({ layout: props.layout });
     }.bind(this));
   },
 
   writing: {
     configuration: function () {
-      this.fs.copy(
-        this.templatePath('config.js'),
-        this.destinationPath('config.js')
-      );
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
@@ -50,20 +73,23 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('package.json'),
         { applicationName: _.kebabCase(this.appname) }
       );
-      this.fs.copy(
+      var layout = layouts[this.props.layout];
+      this.fs.copyTpl(
         this.templatePath('webpack.config.js'),
-        this.destinationPath('webpack.config.js')
+        this.destinationPath('webpack.config.js'),
+        { sourceDir: layout.sourceDir, destDir: layout.destDir }
       );
     },
     application: function () {
+      var layout = layouts[this.props.layout];
       this.fs.copyTpl(
         this.templatePath('src/index.html'),
-        this.destinationPath('src/index.html'),
+        this.destinationPath(layout.sourceDir + '/index.html'),
         { title: _.startCase(this.appname) }
       );
       this.fs.copyTpl(
         this.templatePath('src/js/application.js'),
-        this.destinationPath('src/js/application.js'),
+        this.destinationPath(layout.sourceDir + '/js/application.js'),
         { title: _.startCase(this.appname) }
       );
     }
