@@ -43,18 +43,24 @@ module.exports = yeoman.Base.extend({
     ));
 
     var prompts = [{
-      type: 'list',
       name: 'layout',
       message: 'Which type of source layout you prefer?',
+      type: 'list',
       choices: Object.keys(layouts),
       default: 'node',
       store: true
+    }, {
+      name: 'proxy',
+      message: 'Provide url you dev server will proxy (or ' + chalk.green('none') + ' for no proxy)',
+      type: 'input',
+      default: 'none',
+      store: true
     }];
 
-    return this.prompt(prompts).then(function (props) {
+    return this.prompt(prompts).then(function (answers) {
       // To access props later use this.props.someAnswer;
-      this.props = props;
-      this.config.set({ layout: props.layout });
+      this.props = answers;
+      this.config.set(answers);
     }.bind(this));
   },
 
@@ -73,11 +79,23 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('package.json'),
         { applicationName: _.kebabCase(this.appname) }
       );
+
       var layout = layouts[this.props.layout];
+      var proxyUrl = this.props.proxy === 'none' ? false : this.props.proxy;
+      var devServerPort = 8080;
+      if (this.props.proxy.search(':8080') > -1) { // default dev server port is occupied
+        devServerPort = 8081;
+        this.log('Default dev server port is proxyed. Using ' + chalk.green(devServerPort) + ' instead');
+      }
       this.fs.copyTpl(
         this.templatePath('webpack.config.js'),
         this.destinationPath('webpack.config.js'),
-        { sourceDir: layout.sourceDir, destDir: layout.destDir }
+        {
+          sourceDir: layout.sourceDir,
+          destDir: layout.destDir,
+          proxyUrl: proxyUrl,
+          devServerPort: devServerPort
+        }
       );
     },
     application: function () {

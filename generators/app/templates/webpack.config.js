@@ -22,7 +22,13 @@ var webpackConfig = {
     new HtmlWebpackPlugin({ template: path.resolve(sourceDir, 'index.html') })
   ],
   devServer: {
-    contentBase: destDir
+    contentBase: destDir,
+    <% if (proxyUrl) { %>
+    proxy: {
+      '*': '<%= proxyUrl %>'
+    },
+    port: <%= devServerPort %>
+    <% } %>
   }
 };
 
