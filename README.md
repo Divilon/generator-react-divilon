@@ -56,7 +56,7 @@ This generator is not published to npm yet.
 In order to use it clone it from github and link
 
 ```bash
-git@github.com:Divilon/generator-react-divilon.git
+git clone git@github.com:Divilon/generator-react-divilon.git
 cd generator-react-divilon
 npm link
 ```
