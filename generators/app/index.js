@@ -88,7 +88,7 @@ module.exports = yeoman.Base.extend({
         this.log('Default dev server port is proxyed. Using ' + chalk.green(devServerPort) + ' instead');
       }
       this.fs.copyTpl(
-        this.templatePath('webpack.config.js'),
+        this.templatePath('webpack.config.js.ejs'),
         this.destinationPath('webpack.config.js'),
         {
           sourceDir: layout.sourceDir,
@@ -106,9 +106,33 @@ module.exports = yeoman.Base.extend({
         { title: _.startCase(this.appname) }
       );
       this.fs.copyTpl(
-        this.templatePath('src/js/application.js'),
+        this.templatePath('src/js/application.js.ejs'),
         this.destinationPath(layout.sourceDir + '/js/application.js'),
         { title: _.startCase(this.appname) }
+      );
+
+      // configuration
+      this.fs.copy(
+        this.templatePath('src/js/configureStore.js'),
+        this.destinationPath(layout.sourceDir + '/js/configureStore.js')
+      );
+      // actions
+      this.fs.copy(
+        this.templatePath('src/js/actions/actions.js'),
+        this.destinationPath(layout.sourceDir + '/js/actions/actions.js')
+      );
+      // reducers
+      this.fs.copy(
+        this.templatePath('src/js/reducers/index.js'),
+        this.destinationPath(layout.sourceDir + '/js/reducers/index.js')
+      );
+      this.fs.copy(
+        this.templatePath('src/js/reducers/hello.reducer.js'),
+        this.destinationPath(layout.sourceDir + '/js/reducers/hello.reducer.js')
+      );
+      this.fs.copy(
+        this.templatePath('src/js/components/hello/hello.component.js'),
+        this.destinationPath(layout.sourceDir + '/js/components/hello/hello.component.js')
       );
     }
   },
@@ -120,7 +144,7 @@ module.exports = yeoman.Base.extend({
     ], { saveDev: true });
 
     this.npmInstall([
-      'react', 'react-dom', 'redux', 'react-redux'
+      'react', 'react-dom', 'redux', 'react-redux', 'redux-logger'
     ], { save: true });
   }
 });
